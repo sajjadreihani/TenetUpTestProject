@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29609.76
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{D66854BC-ED8B-47CD-940F-66FCDC25EFAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{D66854BC-ED8B-47CD-940F-66FCDC25EFAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{94948F52-C441-4C45-AF3F-2CBDCAD6EFD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{94948F52-C441-4C45-AF3F-2CBDCAD6EFD4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "Persistence\Persistence.csproj", "{FDB27232-C6CF-4E0C-9337-16085AF12E54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence", "Persistence\Persistence.csproj", "{FDB27232-C6CF-4E0C-9337-16085AF12E54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUI", "WebUI\WebUI.csproj", "{E1C9F097-406E-4DB0-A136-C4FF1E7A336F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUI", "WebUI\WebUI.csproj", "{E1C9F097-406E-4DB0-A136-C4FF1E7A336F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.UnitTest", "Application.UnitTest\Application.UnitTest.csproj", "{203EEFD2-F112-4C84-9A84-6B07B101D081}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{E1C9F097-406E-4DB0-A136-C4FF1E7A336F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1C9F097-406E-4DB0-A136-C4FF1E7A336F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1C9F097-406E-4DB0-A136-C4FF1E7A336F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{203EEFD2-F112-4C84-9A84-6B07B101D081}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{203EEFD2-F112-4C84-9A84-6B07B101D081}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{203EEFD2-F112-4C84-9A84-6B07B101D081}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{203EEFD2-F112-4C84-9A84-6B07B101D081}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
