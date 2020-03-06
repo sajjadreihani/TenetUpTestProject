@@ -1,0 +1,150 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="card">
+    <div class="card-body">
+        <div class="col-3 d-inline-flex">
+
+        <input type="text" class="form-control" id="Search" placeholder="Product Name" oninput="LoadProducts()">
+        </div>
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+            Add
+        </button>
+        <table id="table" class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Created</th>
+                    <th scope="col">Oprations</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <p style="color:red" id="error_message"></p>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name</label>
+                        <input type="text" class="form-control" id="ProductName" placeholder="Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Price</label>
+                        <input type="text" class="form-control" id="ProductPrice" placeholder="Price">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="Save()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+    <script>
+
+        var Products = [];
+        var ProductId = 0;
+        $(document).ready(() => {
+            LoadProducts();
+        });
+
+        function LoadProducts() {
+            $.ajax({
+                url: '/api/Products/GetProducts?Name=' + $('#Search').val(),
+                method: 'GET',
+                success: (res) => {
+                    var table = $('#table');
+                    table.children('tbody').remove();
+                    var tbody = $('<tbody></tbody>');
+                    $.each(res, (index, value) => {
+                        Products.push(value);
+
+                        var row = $('<tr></tr>');
+                        row.append($('<td></td>').text(value.id));
+                        row.append($('<td></td>').text(value.name));
+                        row.append($('<td></td>').text(value.price));
+                        row.append($('<td></td>').text(value.created));
+
+                        var oprations = $('<td></td>');
+
+                        oprations.append($('<button  type="button" class="btn btn-primary" onclick="EditProduct(' + value.id + ')">Edit</button>'))
+                        oprations.append($('<button  type="button" class="btn btn-danger ml-1" onclick="DeleteProduct(' + value.id + ')">Delete</button>'))
+
+                        row.append(oprations);
+                        tbody.append(row);
+                    });
+
+                    table.append(tbody);
+                }
+            });
+        }
+
+        function Save() {
+            $('#error_message').text('');
+            $.ajax({
+                url: '/api/Products/UpsertProduct',
+                method: 'Post',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    id: ProductId,
+                    name: $('#ProductName').val(),
+                    price: $('#ProductPrice').val()
+                }),
+                success: () => {
+                    ProductId = 0;
+                    $('#ProductName').val('')
+                    $('#ProductPrice').val('');
+                    LoadProducts();
+                    $('#exampleModal').modal('hide');
+                },
+                error: (res) => {
+                    $('#error_message').text(res.responseText);
+                }
+            });
+
+        }
+
+        function DeleteProduct(id) {
+            $.ajax({
+                url: '/api/Products/DeleteProduct',
+                method: 'Post',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    id: id,
+                }),
+                success: () => {
+                    LoadProducts();
+                }
+            });
+
+        }
+
+        function EditProduct(id) {
+            ProductId = id;
+            $('#ProductName').val(Products.find(i => i.id == id).name)
+            $('#ProductPrice').val(Products.find(i => i.id == id).price);
+            $('#exampleModal').modal('show');
+
+        }
+    </script>
+
+}
